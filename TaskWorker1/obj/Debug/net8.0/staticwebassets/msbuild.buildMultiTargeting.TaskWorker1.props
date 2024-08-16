@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\TaskWorker1.props" />
-</Project>

@@ -1,7 +1,0 @@
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.csproj.AssemblyReference.cache
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.GeneratedMSBuildEditorConfig.editorconfig
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.AssemblyInfoInputs.cache
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.AssemblyInfo.cs
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.csproj.CoreCompileInputs.cache
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.MvcApplicationPartsAssemblyInfo.cs
-C:\Projects\git\Task-Management\Task-Worker\obj\Debug\net8.0\TaskWorker.MvcApplicationPartsAssemblyInfo.cache
