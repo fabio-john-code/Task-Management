@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  taskrestapi:
+    image: ${DOCKER_REGISTRY-}taskrestapi
+    build:
+      context: .
+      dockerfile: TaskRestAPI/Dockerfile
+
+  taskworker:
+    image: ${DOCKER_REGISTRY-}taskworker
+    build:
+      context: .
+      dockerfile: TaskWorker/Dockerfile
+  redis:
+     image: redis
