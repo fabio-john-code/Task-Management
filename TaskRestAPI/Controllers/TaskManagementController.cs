@@ -24,7 +24,7 @@ namespace TaskRestAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(int id)
         {
             var result = await _taskManagementBusiness.GetTaskById(id);
             if (result == null)
@@ -65,9 +65,9 @@ namespace TaskRestAPI.Controllers
 
         [Route("{id}/status/{status}")]
         [HttpPut()]
-        public async Task<IActionResult> UpdateTaskItemStatus(Guid id, TaskItem.StatusTask status)
+        public async Task<IActionResult> UpdateTaskItemStatus(int id, TaskItem.StatusTask status)
         {
-            if (Guid.Empty == id)
+            if (id <= 0)
             {
                 return BadRequest("No task id informed");
             }

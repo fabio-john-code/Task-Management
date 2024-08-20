@@ -1,5 +1,7 @@
 ﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using TaskManagementEntity.Model;
+using TaskWorker.Data;
 using TaskWorker.TaskManagement.Interfaces;
 
 namespace TaskWorker.TaskManagement
@@ -8,22 +10,24 @@ namespace TaskWorker.TaskManagement
     {
         private readonly ILogger<TaskManagementData> _logger;
         private readonly IBus _bus;
-
+        private readonly TaskManagementContext _taskManagementContext;
         private static List<TaskItem> taskItems = [];
 
-        public TaskManagementData(ILogger<TaskManagementData> logger,
+        public TaskManagementData(TaskManagementContext taskManagementContext,
+            ILogger<TaskManagementData> logger,
             IBus bus)
         {
             _logger = logger;
             _bus = bus;
+            _taskManagementContext = taskManagementContext;
         }
 
         public async Task CreateTaskItem(TaskItem taskItem)
         {
             try
             {
-                taskItems.Add(taskItem);
-                await Task.Delay(500);
+                await _taskManagementContext.Tasks.AddAsync(taskItem);
+                await _taskManagementContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -32,30 +36,28 @@ namespace TaskWorker.TaskManagement
             }
         }
 
-        public async Task<TaskItem> GetTaskById(Guid id)
+        public async Task<TaskItem> GetTaskById(int id)
         {
-            await Task.Delay(500);
-            return taskItems.Find(x => x.Id == id);
+            var result = await _taskManagementContext.Tasks.FindAsync(id);
+
+            return result;
         }
 
-        public async Task<Dictionary<Guid, string>> GetTasks()
+        public async Task<List<TaskItem>> GetTasks()
         {
-            var result = new Dictionary<Guid, string>();
-            foreach (var task in taskItems)
-            {
-                result.Add(task.Id, task.Description);
-            }
-            await Task.Delay(500);
+            var result = await _taskManagementContext.Tasks.ToListAsync();
 
             return result;
         }
 
         public async Task UpdateTaskItem(TaskItem taskItemNew)
         {
-            var taskItem = taskItems.Find(x => x.Id == taskItemNew.Id);
+            var taskItem = await _taskManagementContext.Tasks.FindAsync(taskItemNew.Id); 
             taskItem.Description = taskItemNew.Description;
             taskItem.Status = taskItemNew.Status;
-            await Task.Delay(500);
+            taskItem.DateUpdated = DateTime.Now;
+            _taskManagementContext.Tasks.Update(taskItem);
+            await _taskManagementContext.SaveChangesAsync();
         }
     }
 }

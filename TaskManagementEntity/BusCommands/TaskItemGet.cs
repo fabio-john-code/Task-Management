@@ -8,7 +8,7 @@ using static TaskManagementEntity.BusCommands.TaskItemGet;
 
 namespace TaskManagementEntity.BusCommands
 {
-    public sealed record TaskItemGet(ActionEnum Action, Guid Id)
+    public sealed record TaskItemGet(ActionEnum Action, int Id)
     {
         public enum ActionEnum
         {

@@ -4,8 +4,8 @@ namespace TaskWorker.TaskManagement.Interfaces
 {
     public interface ITaskManagementData
     {
-        Task<TaskItem> GetTaskById(Guid id);
-        Task<Dictionary<Guid, string>> GetTasks();
+        Task<TaskItem> GetTaskById(int id);
+        Task<List<TaskItem>> GetTasks();
         Task CreateTaskItem(TaskItem taskItem);
         Task UpdateTaskItem(TaskItem taskItem);
     }

@@ -4,7 +4,21 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "taskrestapi": "StartDebugging"
+        "taskrestapi": "StartDebugging",
+        "redis": "StartWithoutDebugging",
+        "taskworker": "StartDebugging"
+      }
+    },
+    "TaskManagementAPI": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "taskrestapi",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "serviceActions": {
+        "redis": "DoNotStart",
+        "taskrestapi": "StartDebugging",
+        "taskworker": "StartDebugging"
       }
     }
   }
