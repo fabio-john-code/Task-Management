@@ -28,9 +28,8 @@ namespace TaskRestAPI.Business
             {
                 var taskItem = new TaskItem
                 { 
-                    Id = Guid.NewGuid(),
                     Status = TaskItem.StatusTask.Created,
-                    DateCreated = DateTimeOffset.Now,
+                    DateCreated = DateTime.Now,
                     Description = description,
                 };
 
@@ -45,33 +44,26 @@ namespace TaskRestAPI.Business
             }
         }
 
-        public async Task<TaskItem> GetTaskById(Guid id)
+        public async Task<TaskItem> GetTaskById(int id)
         {
             var response = await _clientRequestGet.GetResponse<TaskItemGetByIdResult>(new TaskItemGet(TaskItemGet.ActionEnum.GetById, id));
             var result = response.Message;
             return result.TaskItem;
         }
 
-        public async Task<Dictionary<Guid, string>> GetTasks()
+        public async Task<List<TaskItem>> GetTasks()
         {
-            try
-            {
-                var response = await _clientRequestGet.GetResponse<TaskItemListResult>(new TaskItemGet(TaskItemGet.ActionEnum.List, Guid.Empty));
-                var result = response.Message;
-                return result.TaskItems;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var response = await _clientRequestGet.GetResponse<TaskItemListResult>(new TaskItemGet(TaskItemGet.ActionEnum.List, default));
+            var result = response.Message;
+            return result.TaskItems;
         }
 
-        public async Task<TaskItem> UpdateTaskItemStatus(Guid id, TaskItem.StatusTask status)
+        public async Task<TaskItem> UpdateTaskItemStatus(int id, TaskItem.StatusTask status)
         {
             var taskItem = this.GetTaskById(id).Result;
 
             taskItem.Status = status;
-            taskItem.DateUpdated = DateTimeOffset.Now;
+            taskItem.DateUpdated = DateTime.Now;
 
             await _bus.Publish(new TaskItemCreateOrUpdate(TaskItemCreateOrUpdate.ActionEnum.Update, taskItem));
 

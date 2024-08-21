@@ -4,9 +4,9 @@ namespace TaskRestAPI.Business.Interfaces
 {
     public interface ITaskManagementBusiness
     {
-        Task<TaskItem> GetTaskById(Guid id);
-        Task<Dictionary<Guid, string>> GetTasks();
+        Task<TaskItem> GetTaskById(int id);
+        Task<List<TaskItem>> GetTasks();
         Task<TaskItem> CreateTaskItem(string description);
-        Task<TaskItem> UpdateTaskItemStatus(Guid id, TaskItem.StatusTask status);
+        Task<TaskItem> UpdateTaskItemStatus(int id, TaskItem.StatusTask status);
     }
 }

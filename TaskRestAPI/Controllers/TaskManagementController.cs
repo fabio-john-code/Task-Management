@@ -24,7 +24,7 @@ namespace TaskRestAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(int id)
         {
             var result = await _taskManagementBusiness.GetTaskById(id);
             if (result == null)
@@ -52,32 +52,31 @@ namespace TaskRestAPI.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> CreateTaskItem(string description)
+        public async Task<IActionResult> CreateTaskItem([FromBody] TaskItem task)
         {
-            if (string.IsNullOrWhiteSpace(description))
+            if (string.IsNullOrWhiteSpace(task.Description))
             {
                 return BadRequest("No description informed");
             }
 
-            var taskItem = await _taskManagementBusiness.CreateTaskItem(description);
+            var taskItem = await _taskManagementBusiness.CreateTaskItem(task.Description);
             return Accepted(taskItem);
         }
 
-        [Route("{id}/status/{status}")]
-        [HttpPut()]
-        public async Task<IActionResult> UpdateTaskItemStatus(Guid id, TaskItem.StatusTask status)
+        [HttpPatch()]
+        public async Task<IActionResult> UpdateTaskItemStatus([FromBody] TaskItem task)
         {
-            if (Guid.Empty == id)
+            if (task.Id <= 0)
             {
                 return BadRequest("No task id informed");
             }
 
-            if (status == TaskItem.StatusTask.Undefined)
+            if (task.Status == TaskItem.StatusTask.Undefined)
             {
                 return BadRequest("Invalid status");
             }
 
-            var taskItemNew = await _taskManagementBusiness.UpdateTaskItemStatus(id, status);
+            var taskItemNew = await _taskManagementBusiness.UpdateTaskItemStatus(task.Id, task.Status);
 
             return Accepted(taskItemNew);
         }

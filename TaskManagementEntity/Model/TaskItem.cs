@@ -12,10 +12,10 @@
             Error = 5
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string? Description { get; set; }
-        public DateTimeOffset DateCreated { get; set; }
-        public DateTimeOffset? DateUpdated { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
         public StatusTask Status { get; set; }
     }
 }

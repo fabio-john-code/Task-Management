@@ -12,5 +12,8 @@ services:
     build:
       context: .
       dockerfile: TaskWorker/Dockerfile
+    volumes:
+      - ./database:/data
+
   redis:
      image: redis

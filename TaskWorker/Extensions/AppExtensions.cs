@@ -5,6 +5,8 @@ using TaskWorker.TaskManagement;
 using TaskWorker.TaskManagement.Interfaces;
 using TaskWorker.BusCommands;
 using TaskWorker.Bus;
+using Microsoft.EntityFrameworkCore;
+using TaskWorker.Data;
 
 namespace TaskWorker.Extensions
 {
@@ -43,6 +45,12 @@ namespace TaskWorker.Extensions
                         cfg.ConfigureEndpoints(ctx);
                     });
             });
+        }
+
+        public static void AddDataBaseContext(this IServiceCollection services)
+        {
+            services.AddScoped<ITaskManagementData, TaskManagementData>();
+            services.AddDbContext<TaskManagementContext>(options => options.UseInMemoryDatabase("tasksdb"));
         }
     }
 }
