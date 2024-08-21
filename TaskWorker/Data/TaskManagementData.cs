@@ -52,7 +52,7 @@ namespace TaskWorker.TaskManagement
 
         public async Task UpdateTaskItem(TaskItem taskItemNew)
         {
-            var taskItem = await _taskManagementContext.Tasks.FindAsync(taskItemNew.Id); 
+            var taskItem = _taskManagementContext.Tasks.Find(taskItemNew.Id); 
             taskItem.Description = taskItemNew.Description;
             taskItem.Status = taskItemNew.Status;
             taskItem.DateUpdated = DateTime.Now;
