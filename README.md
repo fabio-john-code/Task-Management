@@ -8,6 +8,8 @@ docker run --name sqlserver -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=senhaSA0821" -p 1
 
 Clonar o repositório https://github.com/fabio-john-code/Task-Management/
 
+Acessar o sql server com o usuario sa e executar o script .\Task-Management\TaskWorker\Database\init.sql
+
 Abrir a solução TaskRestAPI.sln no visual studio 22
 
 Acertar o ip do Rabbit MQ nos appsettings.json do TaskWorker e TaskRestAPI
