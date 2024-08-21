@@ -1,0 +1,62 @@
+<div class="flex h-screen">
+  <div class="w-[25%]">
+
+  </div>
+  <div class="overflow-auto w-[50%]">
+    <h1 class="py-10 font-extrabold text-5x1">
+      Task List
+    </h1>
+    @if (taskList$ | async;as taskList) { 
+      @if (taskList.length > 0)
+      {
+        <ul>
+          @for (item of taskList; track $index) {
+            <form name="updateTask" (ngSubmit)="updateTaskList(item.id, 3)" [formGroup]="taskForm">
+              <li class="p-2 bg-slate-100 border-b-2 border-slate-200">
+                <label for="description">Description: </label>
+                <span id="description" class="font-light text-3x1">{{item.description}}</span>
+                <div>
+                <label for="status">Status: </label>
+                  <span id="status">
+                    @switch (true) {
+                      @case (item.status == "1") {
+                        Created
+                      }
+                      @case (item.status == "3") {
+                        Completed
+                      }
+                      @default {
+                        Default case.
+                      }
+                    }                  
+                  </span>
+              </div>
+              <div>
+                @if (item.status == "1")
+                {
+                  <button type="submit" class="w-100 bg-slate-800 p-2 text-white rounded-sm mt-2" [formGroup]="taskForm">Mask as completeted</button>
+                }
+              </div>
+            </li>
+            </form>
+          }
+        </ul>
+      } @else {
+        <p>No Tasks Found</p>
+      }
+    }
+    <form name="newTask" (ngSubmit)="onFormSubmit()" [formGroup]="taskForm">
+      <h1 class="py-10 font-extrabold text-5x1">
+        New Task
+      </h1>
+      <div class="mt-2">
+        <label for="description" class="font-bold">Description</label>
+        <input type="text" id="description" class="w-full p-2 border-2 rounded-sm mt-2" formControlName="description">
+      </div>
+      <div class="mt-2">
+        <button type="submit" class="bg-slate-800 text-white px-4 px-2 rounded-sm w-full">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -9,7 +9,7 @@ builder.Services.AddHostedService<Worker>();
 // Rabbit MQ server
 builder.Services.AddRabbitMQService(builder.Configuration);
 
-builder.Services.AddDbContext<TaskManagementContext>(options => options.UseInMemoryDatabase("TaskManagement"));
+builder.Services.AddDbContext<TaskManagementContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 var host = builder.Build();
 host.Run();
